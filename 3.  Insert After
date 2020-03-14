@@ -1,0 +1,106 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef  struct simpul dnode;
+
+struct simpul
+{
+    int data;
+    dnode *prev, *next;
+};
+
+void alokasi();
+void tampil();
+void insertAkhir();
+void insertAfter();
+
+dnode *p=NULL;
+dnode *head=NULL;
+
+int main()
+{
+    char jwb;
+    do
+    {
+        alokasi();
+        fflush(stdin);
+        insertAkhir();
+        fflush(stdin);
+        printf("Ingin memasukkan data lagi?");
+        jwb = getchar();
+        fflush(stdin);
+    }while(jwb=='Y'||jwb=='y');
+    tampil();
+    insertAfter();
+    tampil();
+}
+
+void insertAkhir()
+{
+    dnode *tail=head;
+    if(head==NULL)
+        head=p;
+    else
+    {
+        while(tail->next!=NULL)
+            tail=tail->next;
+        p->prev=tail;
+        tail->next=p;
+        tail=p;
+    }
+}
+
+void insertAfter()
+{
+    alokasi();
+    dnode *after=head;
+    int key;
+    printf("Disisipkan setelah : ");
+    scanf("%d", &key);
+    if(head->data!=key)
+    {
+        while(after->data!=key)
+        {
+            if(after->next==NULL)
+            {
+                printf("Key tidak ada \n\n");
+                exit (0);
+            }
+            after=after->next;
+        }
+    }
+    p->prev=after;
+    p->next=after->next;
+    if(after->next!=NULL)
+        after->next->prev=p;
+    after->next=p;
+
+}
+
+void alokasi()
+{
+    p=(dnode*)malloc(sizeof(dnode));
+    if(p==NULL)
+    {
+        printf("Gagal");
+        exit(0);
+    }
+    else
+    {
+        printf("Masukkan nilai : ");
+        scanf("%d", &p->data);
+        fflush(stdin);
+        p->next=NULL;
+    }
+}
+
+void tampil()
+{
+    dnode *p=head;
+    do
+    {
+        printf("%d\n", p->data);
+        p=p->next;
+    }while(p!=NULL);
+    puts("");
+}

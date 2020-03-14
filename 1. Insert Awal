@@ -1,0 +1,71 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef  struct simpul dnode;
+
+struct simpul
+{
+    int data;
+    dnode *prev, *next;
+};
+
+void alokasi();
+void tampil();
+void insertAwal();
+
+dnode *p=NULL;
+dnode *head=NULL;
+
+int main()
+{
+    char jwb;
+    do
+    {
+        alokasi();
+        fflush(stdin);
+        insertAwal();
+        fflush(stdin);
+        printf("Ingin memasukkan data lagi?");
+        jwb = getchar();
+        fflush(stdin);
+    }while(jwb=='Y'||jwb=='y');
+    tampil();
+}
+
+void insertAwal()
+{
+    if(head!=NULL)
+    {
+        p->next=head;
+        head->prev=p;
+    }
+    head=p;
+}
+
+void alokasi()
+{
+    p=(dnode*)malloc(sizeof(dnode));
+    if(p==NULL)
+    {
+        printf("Gagal");
+        exit(0);
+    }
+    else
+    {
+        printf("Masukkan nilai : ");
+        scanf("%d", &p->data);
+        fflush(stdin);
+        p->next=NULL;
+    }
+}
+
+void tampil()
+{
+    dnode *p=head;
+    do
+    {
+        printf("%d\n", p->data);
+        p=p->next;
+    }while(p!=NULL);
+    puts("");
+}

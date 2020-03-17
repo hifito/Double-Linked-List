@@ -56,6 +56,7 @@ void alokasi()
         scanf("%d", &p->data);
         fflush(stdin);
         p->next=NULL;
+        p->prev=NULL;
     }
 }
 

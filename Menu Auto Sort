@@ -1,0 +1,100 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node
+{
+    int data;
+    struct node *prev, *next;
+} DNode;
+
+DNode *head = NULL;
+DNode *p = NULL;
+DNode *hapus = NULL;
+
+void alokasi();
+void insert_akhir();
+void del_akhir();
+void bebas();
+void baca();
+
+int main()
+{
+    char answer;
+    do
+    {
+        alokasi();
+        insert_akhir();
+        printf("Mau masukkan data lagi(y/t)?");
+        scanf("%c", &answer);
+        fflush(stdin);
+    }
+    while(answer == 'y' || answer == 'Y');
+    baca();
+    del_akhir();
+    printf("\n");
+    baca();
+}
+
+void alokasi()
+{
+    p = (DNode*)malloc(sizeof(DNode));
+    if(p==NULL)
+    {
+        printf("Alokasi Gagal");
+        exit(0);
+    }
+    printf("Masukkan data :");
+    scanf("%d",&p->data);
+    fflush(stdin);
+
+    p->prev = NULL;
+    p->next = NULL;
+}
+
+void insert_akhir()
+{
+    DNode *tail = NULL;
+    if(head == NULL)
+        head = p;
+    else
+    {
+        tail = head;
+        while(tail->next != NULL)
+            tail = tail->next;
+        p->prev = tail;
+        tail->next = p;
+        //tail = p;
+    }
+}
+
+void del_akhir()
+{
+    hapus = head;
+    if(hapus->next == NULL)
+        head = NULL;
+    else
+    {
+        while(hapus->next != NULL)
+            hapus = hapus->next;
+        hapus->prev->next = NULL;
+    }
+    bebas();
+}
+
+void bebas()
+{
+    free(hapus);
+    hapus = NULL;
+}
+
+void baca()
+{
+    DNode *baca = head;
+    printf("\nTampilan data dalam DLL\n");
+    do
+    {
+        printf("%d\n", baca->data);
+        baca = baca->next;
+    }
+    while(baca != NULL);
+}

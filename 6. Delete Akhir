@@ -57,30 +57,13 @@ void insertAkhir()
 void deleteAkhir()
 {
     hapus=head;
-    int key;
-    printf("Delete data : ");
-    scanf("%d", &key);
-    fflush(stdin);
-    if(head->data==key)
-    {
-        head=hapus->next;
-        head->prev=NULL;
-    }
+    if(hapus->next==NULL)
+        head=NULL;
     else
     {
-        while(hapus->data!=key)
-        {
-            if(hapus->next==NULL)
-            {
-                printf("Key tidak ada \n");
-                exit(0);
-            }
+        while(hapus->next!=NULL)
             hapus=hapus->next;
-
-        }
-        if(hapus->next!=NULL)
-            hapus->next->prev=hapus->prev;
-        hapus->prev->next=hapus->next;
+        hapus->prev->next=NULL;
     }
     bebas();
 }
